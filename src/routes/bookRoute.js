@@ -39,6 +39,9 @@ router.get('/all', async (req, res) => {
     const skip = (page - 1) * limit
     const books = await Book.find().populate('user', 'username image').skip(skip).limit(limit)
 
+    console.log(books);
+
+
     const response = books.map(book => ({
       id: book._id,
       title: book.title,

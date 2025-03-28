@@ -5,7 +5,7 @@ const bookSchema = new Schema({
   caption: { type: String, required: true },
   image: { type: String, required: true },
   rate: { type: String, required: true, min: 1, max: 5 },
-  user: { type: Schema.ObjectId, ref: 'User' }
+  user: { type: Schema.Types.ObjectId, ref: 'User' }
 }, { timestamps: true });
 
 const Book = model('Book', bookSchema);
