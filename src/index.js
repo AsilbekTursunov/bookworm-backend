@@ -18,6 +18,10 @@ const __dirname = path.dirname(__filename);
 const app = express();
 dotenv.config();
 
+app.use(cors({
+  credentials: true, // allow cookies
+}))
+
  
 // JSON body limitni oshirish
 app.use(bodyParser.json({ limit: '50mb' })); // JSON so'rovlar uchun 50MB
