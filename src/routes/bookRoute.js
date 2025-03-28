@@ -35,10 +35,25 @@ router.post('/create-book', async (req, res) => {
 router.get('/all', async (req, res) => {
   try {
     const page = req.query.page || 1
-    const limit = req.query.limit || 4
+    const limit = req.query.limit || 5
     const skip = (page - 1) * limit
     const books = await Book.find().populate('user', 'username image').skip(skip).limit(limit)
-    res.json({ data: books })
+
+    const response = books.map(book => ({
+      id: book._id,
+      title: book.title,
+      caption: book.caption,
+      image: book.image,
+      rate: book.rate,
+      user: {
+        id: book.user._id,
+        username: book.user.username,
+        image: book.user.image,
+        createdAt: book.user.createdAt,
+      },
+      createdAt: book.createdAt,
+    }))
+    res.json({ data: response })
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: error.message });
