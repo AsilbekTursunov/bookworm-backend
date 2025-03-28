@@ -55,7 +55,7 @@ router.post('/login', async (req, res) => {
     if (!validPassword) return res.status(400).json({ error: 'Password is invalid' });
 
     const token = generateToken(userExist._id, email);
-    return res.json({ token, user: { id: userExist._id, email: userExist.email, username: userExist.username, image: userExist.profileImage, createdAt: userExist.createdAt } });
+    return res.json({ token, user: { id: userExist._id, email: userExist.email, username: userExist.username, image: userExist.image, createdAt: userExist.createdAt } });
 
   } catch (error) {
     res.status(500).json({ error: { message: error.message } });
