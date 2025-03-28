@@ -31,11 +31,12 @@ router.post('/register', async (req, res) => {
 
     const user = await User.create({ email, password: hashedPassword, username, image: profileImage });
     // await user.save();
+    console.log(user);
 
     const token = generateToken(user._id, user.email);
-    return res.status(201).json({
+    res.status(201).json({
       token,
-      user: { id: user._id, email: user.email, username: user.username, image: user.profileImage, createdAt: user.createdAt },
+      user: { id: user._id, email: user.email, username: user.username, image: user.image, createdAt: user.createdAt },
     });
   } catch (error) {
     console.log(error);
