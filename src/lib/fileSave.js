@@ -22,7 +22,7 @@ export async function saveImage(base64String) {
     const mimeType = match[1];
     const extension = mimeType.split('/')[1];
 
-    const fileName = `${uuid()}.${extension}`;
+    const fileName = `${uuid().slice(0, 5)}.${extension}`;
     const filePath = path.join(UPLOAD_DIR, fileName);
 
     const base64Data = base64String.replace(/^data:image\/\w+;base64,/, '');
