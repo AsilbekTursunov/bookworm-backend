@@ -7,14 +7,12 @@ const router = express.Router();
 
 router.post('/create-book', async (req, res) => {
   try {
-    const { title, image, rate, caption, email } = req.body 
-
+    const { title, image, rate, caption, email } = req.body
 
     const user = await User.findOne({ email }) 
 
     const savedImage = await saveImage(image)
     const book = await Book.create({ title, image: savedImage, rate, caption, user: user._id })
-
 
     const response = {
       title: book.title,
@@ -77,6 +75,32 @@ router.post('/delete/:id', async (req, res) => {
   }
 })
 
+router.get('/user/:userId', async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const books = await Book.find({ user: userId }).populate('user', 'username image');
+
+    const response = books.map(book => ({
+      id: book._id,
+      title: book.title,
+      caption: book.caption,
+      image: book.image,
+      rate: book.rate,
+      user: {
+        id: book.user._id,
+        username: book.user.username,
+        image: book.user.image,
+        createdAt: book.user.createdAt,
+      },
+      createdAt: book.createdAt,
+    }));
+
+    res.json({ data: response });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: error.message });
+  }
+});
 
 
 export default router;
