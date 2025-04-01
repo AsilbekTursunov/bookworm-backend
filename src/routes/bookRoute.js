@@ -8,8 +8,10 @@ const router = express.Router();
 router.post('/create-book', async (req, res) => {
   try {
     const { title, image, rate, caption, userId } = req.body
+    console.log(req.body);
 
-    const user = await User.findOne({ id: userId })
+
+    const user = await User.findById(userId)
 
     const savedImage = await saveImage(image)
     const book = await Book.create({ title, image: savedImage, rate, caption, user: user._id })
