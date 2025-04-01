@@ -11,8 +11,8 @@ router.post('/create-book', async (req, res) => {
 
     const user = await User.findOne({ email }) 
 
-    const savedImage = await saveImage(image)
-    const book = await Book.create({ title, image: savedImage, rate, caption, user: user._id })
+    // const savedImage = await saveImage(image)
+    const book = await Book.create({ title, image, rate, caption, user: user._id })
 
     const response = {
       title: book.title,
